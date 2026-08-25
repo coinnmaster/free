@@ -4,697 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Coin Master - Coins & Spins Booster</title>
+    <title>Coin Master | Coins & Spins</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <meta
+        name="description"
+        content="Coin Master coins and spins interface demo"
+    >
 
-        :root {
-            --brown: #63301d;
-            --brown-light: #b8733f;
-            --gold: #d6a41d;
-            --cream: #ffe1ad;
-            --cream-light: #fff0d1;
-            --green: #00c853;
-            --green-dark: #00a844;
-        }
-
-        body {
-            min-height: 100vh;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #ffffff;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* =================================
-           BACKGROUND BLUE SHAPES
-        ================================= */
-
-        body::before {
-            content: "";
-            position: fixed;
-            left: -80px;
-            top: 145px;
-            width: 230px;
-            height: 105px;
-            background: #318bc5;
-            transform: rotate(3deg);
-            z-index: -2;
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            right: -80px;
-            bottom: 70px;
-            width: 230px;
-            height: 105px;
-            background: #318bc5;
-            transform: rotate(-4deg);
-            z-index: -2;
-        }
-
-        /* =================================
-           MAIN CONTAINER
-        ================================= */
-
-        .page {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 76px 20px 50px;
-            position: relative;
-        }
-
-        .card {
-            width: min(540px, 100%);
-            min-height: 520px;
-            background: linear-gradient(
-                145deg,
-                #ffe0a9,
-                #f7c681
-            );
-            border-radius: 15px;
-            padding: 170px 52px 70px;
-            position: relative;
-            box-shadow: 0 1px 0 rgba(255,255,255,.4);
-        }
-
-        /* =================================
-           TOP LOGO BOX
-        ================================= */
-
-        .logo-box {
-            position: absolute;
-            width: calc(100% - 94px);
-            height: 82px;
-            left: 50%;
-            top: -38px;
-            transform: translateX(-50%);
-
-            background: #bb783f;
-            border: 3px solid #d5a315;
-            border-radius: 12px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            box-shadow:
-                0 8px 12px rgba(65, 37, 15, .35),
-                inset 0 1px 1px rgba(255,255,255,.3);
-        }
-
-        /* CSS logo replacement */
-        .logo {
-            width: 90px;
-            height: 70px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-circle {
-            width: 62px;
-            height: 62px;
-            border-radius: 50%;
-            background:
-                radial-gradient(
-                    circle at 35% 30%,
-                    #fff6a5,
-                    #e9ae20 45%,
-                    #a65b13 75%
-                );
-            border: 4px solid #f6d44d;
-            box-shadow:
-                0 3px 5px rgba(0,0,0,.35);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transform: rotate(-4deg);
-        }
-
-        .logo-title {
-            font-size: 13px;
-            line-height: 12px;
-            font-weight: 900;
-            color: white;
-            text-shadow:
-                2px 2px 0 #84230f,
-                -1px -1px 0 #84230f;
-        }
-
-        .logo-master {
-            font-size: 12px;
-            line-height: 13px;
-            font-weight: 900;
-            color: #ffdc39;
-            text-shadow:
-                2px 2px 0 #8b2613;
-        }
-
-        .coin {
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #ffd84b;
-            border: 2px solid #a96d13;
-        }
-
-        .coin.one {
-            top: 2px;
-            right: 10px;
-        }
-
-        .coin.two {
-            bottom: 3px;
-            left: 9px;
-        }
-
-        /* =================================
-           HEADING
-        ================================= */
-
-        .heading {
-            text-align: center;
-            margin-bottom: 38px;
-        }
-
-        .heading h1 {
-            color: var(--brown);
-            font-size: clamp(34px, 6vw, 42px);
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 3px;
-        }
-
-        .heading p {
-            color: #5b2919;
-            font-size: 16px;
-            letter-spacing: 3px;
-        }
-
-        /* =================================
-           FORM
-        ================================= */
-
-        .form-group {
-            margin-bottom: 28px;
-        }
-
-        .form-label {
-            display: block;
-            color: #6d301c;
-            font-size: 16px;
-            letter-spacing: .5px;
-            margin-bottom: 7px;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .user-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-
-            width: 24px;
-            height: 24px;
-
-            border: 3px solid #465126;
-            border-radius: 50%;
-        }
-
-        .user-icon::before {
-            content: "";
-            position: absolute;
-            width: 7px;
-            height: 7px;
-            border: 2px solid #465126;
-            border-radius: 50%;
-            left: 50%;
-            top: 3px;
-            transform: translateX(-50%);
-        }
-
-        .user-icon::after {
-            content: "";
-            position: absolute;
-            width: 13px;
-            height: 7px;
-            border: 2px solid #465126;
-            border-radius: 10px 10px 0 0;
-            border-bottom: 0;
-            left: 50%;
-            bottom: 2px;
-            transform: translateX(-50%);
-        }
-
-        #username {
-            width: 100%;
-            height: 70px;
-            border: none;
-            outline: none;
-
-            background: rgba(255, 246, 227, .67);
-            border-radius: 6px;
-
-            padding: 0 20px 0 60px;
-
-            color: #555;
-            font-size: 17px;
-            font-weight: 600;
-
-            transition: .25s ease;
-        }
-
-        #username::placeholder {
-            color: #777;
-            opacity: 1;
-        }
-
-        #username:focus {
-            background: rgba(255,255,255,.82);
-            box-shadow:
-                0 0 0 2px rgba(210, 161, 24, .55);
-        }
-
-        /* =================================
-           PLATFORM
-        ================================= */
-
-        .platforms {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .platform {
-            height: 70px;
-            background: rgba(255, 246, 227, .67);
-            border: 1px solid rgba(255,255,255,.9);
-            border-radius: 0 25px 25px 25px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            cursor: pointer;
-
-            transition:
-                transform .2s ease,
-                background .2s ease,
-                box-shadow .2s ease;
-        }
-
-        .platform:first-child {
-            border-radius: 0 25px 0 25px;
-        }
-
-        .platform:last-child {
-            border-radius: 25px 0 25px 0;
-        }
-
-        .platform:hover {
-            transform: translateY(-2px);
-            background: rgba(255,255,255,.82);
-        }
-
-        .platform.selected {
-            background: #fff5dd;
-            box-shadow:
-                inset 0 0 0 3px #d3a122,
-                0 4px 10px rgba(112, 63, 22, .18);
-            transform: translateY(-2px);
-        }
-
-        .platform-icon {
-            color: #6d321f;
-            font-size: 29px;
-        }
-
-        /* Android CSS icon */
-        .android-icon {
-            width: 22px;
-            height: 18px;
-            background: #6d321f;
-            border-radius: 7px 7px 3px 3px;
-            position: relative;
-        }
-
-        .android-icon::before {
-            content: "";
-            position: absolute;
-            left: 3px;
-            top: -7px;
-            width: 16px;
-            height: 11px;
-            background: #6d321f;
-            border-radius: 9px 9px 2px 2px;
-        }
-
-        .android-icon::after {
-            content: "•  •";
-            white-space: pre;
-            position: absolute;
-            color: #fff;
-            font-size: 8px;
-            top: -3px;
-            left: 4px;
-            letter-spacing: 2px;
-        }
-
-        /* Apple icon */
-        .apple-icon {
-            font-size: 31px;
-            line-height: 1;
-        }
-
-        /* =================================
-           CONTINUE BUTTON
-        ================================= */
-
-        .button-container {
-            position: absolute;
-            left: 50%;
-            bottom: -29px;
-            transform: translateX(-50%);
-        }
-
-        #continueBtn {
-            width: 210px;
-            height: 75px;
-
-            border: none;
-            border-radius: 8px;
-
-            background: linear-gradient(
-                180deg,
-                #00d45b,
-                #00b94d
-            );
-
-            color: white;
-            font-size: 21px;
-            font-weight: bold;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 5px 8px rgba(0,0,0,.25),
-                inset 0 2px 4px rgba(255,255,255,.45);
-
-            transition: .2s ease;
-
-            position: relative;
-            overflow: hidden;
-        }
-
-        #continueBtn::before {
-            content: "";
-            position: absolute;
-            left: 15px;
-            right: 15px;
-            top: 6px;
-            height: 8px;
-
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255,255,255,.75),
-                transparent
-            );
-
-            border-radius: 50%;
-            filter: blur(2px);
-        }
-
-        #continueBtn:hover {
-            transform: translateY(-2px);
-            box-shadow:
-                0 8px 12px rgba(0,0,0,.28),
-                inset 0 2px 4px rgba(255,255,255,.45);
-        }
-
-        #continueBtn:active {
-            transform: translateY(2px);
-            box-shadow:
-                0 3px 5px rgba(0,0,0,.25);
-        }
-
-        #continueBtn.loading {
-            pointer-events: none;
-            font-size: 0;
-        }
-
-        #continueBtn.loading::after {
-            content: "";
-            position: absolute;
-
-            width: 25px;
-            height: 25px;
-
-            border: 3px solid rgba(255,255,255,.4);
-            border-top-color: white;
-
-            border-radius: 50%;
-
-            left: 50%;
-            top: 50%;
-
-            transform: translate(-50%, -50%);
-
-            animation: spin .7s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: translate(-50%, -50%) rotate(360deg);
-            }
-        }
-
-        /* =================================
-           MESSAGE
-        ================================= */
-
-        .message {
-            position: fixed;
-            top: 25px;
-            left: 50%;
-            transform: translate(-50%, -120px);
-
-            min-width: 280px;
-            max-width: 90%;
-
-            padding: 15px 22px;
-
-            background: #382015;
-            color: white;
-
-            border-radius: 8px;
-
-            text-align: center;
-            font-size: 14px;
-
-            box-shadow: 0 6px 20px rgba(0,0,0,.25);
-
-            opacity: 0;
-
-            transition: .35s ease;
-
-            z-index: 100;
-        }
-
-        .message.show {
-            transform: translate(-50%, 0);
-            opacity: 1;
-        }
-
-        .message.success {
-            background: #008f3d;
-        }
-
-        .message.error {
-            background: #c0392b;
-        }
-
-        /* =================================
-           RESPONSIVE
-        ================================= */
-
-        @media (max-width: 600px) {
-
-            .page {
-                padding: 65px 15px 55px;
-                align-items: center;
-            }
-
-            .card {
-                min-height: 510px;
-                padding: 155px 28px 65px;
-                border-radius: 15px;
-            }
-
-            .logo-box {
-                width: calc(100% - 50px);
-                height: 78px;
-                top: -35px;
-            }
-
-            .heading {
-                margin-bottom: 30px;
-            }
-
-            .heading h1 {
-                font-size: 34px;
-            }
-
-            .heading p {
-                font-size: 13px;
-                letter-spacing: 2px;
-            }
-
-            #username {
-                height: 65px;
-            }
-
-            .platform {
-                height: 65px;
-            }
-
-            #continueBtn {
-                width: 190px;
-                height: 70px;
-            }
-        }
-
-        @media (max-width: 380px) {
-
-            .page {
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-
-            .card {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-
-            .logo-box {
-                width: calc(100% - 35px);
-            }
-
-            .heading h1 {
-                font-size: 30px;
-            }
-
-            .heading p {
-                font-size: 11px;
-            }
-
-            .form-label {
-                font-size: 14px;
-            }
-
-            #username {
-                font-size: 15px;
-                padding-left: 54px;
-            }
-
-            .platform-icon {
-                font-size: 25px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <main class="page">
+    <div class="background">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <main class="container">
 
         <section class="card">
 
-            <!-- LOGO -->
-            <div class="logo-box">
+            <!-- TOP BRAND -->
+            <div class="brand">
+
+                <div class="brand-glow"></div>
 
                 <div class="logo">
-                    <div class="coin one"></div>
-                    <div class="coin two"></div>
 
-                    <div class="logo-circle">
-                        <span class="logo-title">COIN</span>
-                        <span class="logo-master">MASTER</span>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <!-- TITLE -->
-            <div class="heading">
-                <h1>Coin Master</h1>
-                <p>coins &amp; spins booster</p>
-            </div>
-
-
-            <!-- USERNAME -->
-            <div class="form-group">
-
-                <label class="form-label" for="username">
-                    your username
-                </label>
-
-                <div class="input-wrapper">
-
-                    <span class="user-icon"></span>
-
-                    <input
-                        type="text"
-                        id="username"
-                        placeholder="Username/ID"
-                        autocomplete="off"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <!-- PLATFORM -->
-            <div class="form-group">
-
-                <label class="form-label">
-                    your platform
-                </label>
-
-                <div class="platforms">
-
-                    <div
-                        class="platform"
-                        data-platform="Android"
-                        id="android"
-                    >
-                        <div class="android-icon"></div>
+                    <div class="logo-coin">
+                        <span>CM</span>
                     </div>
 
-                    <div
-                        class="platform"
-                        data-platform="iOS"
-                        id="ios"
-                    >
-                        <div class="apple-icon">●</div>
+                    <div class="logo-text">
+                        <strong>COIN</strong>
+                        <strong>MASTER</strong>
                     </div>
 
                 </div>
@@ -702,12 +47,211 @@
             </div>
 
 
-            <!-- CONTINUE -->
-            <div class="button-container">
+            <!-- CONTENT -->
+            <div class="content">
 
-                <button id="continueBtn" type="button">
-                    Continue
-                </button>
+                <div class="heading">
+
+                    <span class="badge">
+                        ✨ BOOSTER CENTER
+                    </span>
+
+                    <h1>
+                        Coin Master
+                    </h1>
+
+                    <p>
+                        Coins &amp; Spins Booster
+                    </p>
+
+                </div>
+
+
+                <!-- FORM -->
+                <form id="boosterForm" novalidate>
+
+                    <div class="field">
+
+                        <label for="username">
+                            Your Username
+                        </label>
+
+                        <div class="input-box">
+
+                            <span class="input-icon">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <circle
+                                        cx="12"
+                                        cy="8"
+                                        r="3"
+                                    />
+                                    <path
+                                        d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6"
+                                    />
+                                </svg>
+                            </span>
+
+                            <input
+                                id="username"
+                                name="username"
+                                type="text"
+                                placeholder="Enter your Username / ID"
+                                maxlength="30"
+                                autocomplete="off"
+                            >
+
+                            <span
+                                class="valid-icon"
+                                id="validIcon"
+                            >
+                                ✓
+                            </span>
+
+                        </div>
+
+                        <small
+                            class="error"
+                            id="usernameError"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- PLATFORM -->
+                    <div class="field">
+
+                        <label>
+                            Select Platform
+                        </label>
+
+                        <div class="platform-grid">
+
+                            <button
+                                type="button"
+                                class="platform"
+                                data-platform="Android"
+                            >
+
+                                <div class="platform-icon android">
+
+                                    <svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M7 8h10v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V8Z"
+                                        />
+                                        <path
+                                            d="M8 8 6.5 5.5M16 8l1.5-2.5"
+                                        />
+                                        <circle
+                                            cx="9"
+                                            cy="11"
+                                            r=".7"
+                                        />
+                                        <circle
+                                            cx="15"
+                                            cy="11"
+                                            r=".7"
+                                        />
+                                    </svg>
+
+                                </div>
+
+                                <div class="platform-info">
+                                    <strong>Android</strong>
+                                    <span>Google Play</span>
+                                </div>
+
+                                <span class="radio"></span>
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="platform"
+                                data-platform="iOS"
+                            >
+
+                                <div class="platform-icon ios">
+
+                                    <svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M15.7 12.6c0-2.1 1.7-3.1 1.8-3.2-1-.1-2.1-.9-3.2-.9-1.3 0-2.4.8-3 .8-1 0-1.9-.8-3-.8-1.5 0-2.8.9-3.5 2.2-1.5 2.6-.4 6.4 1.1 8.5.7 1 1.5 2.1 2.6 2.1 1 0 1.4-.7 2.7-.7s1.7.7 2.7.7c1.1 0 1.8-1 2.5-2 .8-1.1 1.1-2.2 1.1-2.3-.1 0-2-.8-2-2.4Z"
+                                        />
+                                        <path
+                                            d="M14.4 6.9c.6-.7 1-1.7.9-2.7-.9 0-1.9.6-2.5 1.3-.5.6-1 1.6-.9 2.5 1 .1 1.9-.5 2.5-1.1Z"
+                                        />
+                                    </svg>
+
+                                </div>
+
+                                <div class="platform-info">
+                                    <strong>iPhone / iPad</strong>
+                                    <span>App Store</span>
+                                </div>
+
+                                <span class="radio"></span>
+
+                            </button>
+
+                        </div>
+
+                        <small
+                            class="error"
+                            id="platformError"
+                        ></small>
+
+                    </div>
+
+
+                    <!-- CONTINUE -->
+                    <button
+                        type="submit"
+                        class="continue-btn"
+                        id="continueBtn"
+                    >
+
+                        <span class="btn-content">
+
+                            <span>
+                                Continue
+                            </span>
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2.5"
+                            >
+                                <path d="M5 12h14"/>
+                                <path d="m13 6 6 6-6 6"/>
+                            </svg>
+
+                        </span>
+
+                        <span class="loader"></span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- FOOTER -->
+                <div class="security">
+
+                    <span class="lock">
+                        🔒
+                    </span>
+
+                    <span>
+                        Frontend demo interface
+                    </span>
+
+                </div>
 
             </div>
 
@@ -716,227 +260,51 @@
     </main>
 
 
-    <!-- MESSAGE -->
-    <div id="message" class="message"></div>
-
-
-    <script>
-
-        /* =========================================
-           VARIABLES
-        ========================================= */
-
-        const usernameInput =
-            document.getElementById("username");
-
-        const platforms =
-            document.querySelectorAll(".platform");
-
-        const continueBtn =
-            document.getElementById("continueBtn");
-
-        const message =
-            document.getElementById("message");
-
-        let selectedPlatform = null;
-
-
-        /* =========================================
-           PLATFORM SELECTION
-        ========================================= */
-
-        platforms.forEach(platform => {
-
-            platform.addEventListener("click", function () {
-
-                platforms.forEach(item => {
-                    item.classList.remove("selected");
-                });
-
-                this.classList.add("selected");
-
-                selectedPlatform =
-                    this.dataset.platform;
-
-                localStorage.setItem(
-                    "selectedPlatform",
-                    selectedPlatform
-                );
-
-            });
-
-        });
-
-
-        /* =========================================
-           SHOW MESSAGE
-        ========================================= */
-
-        function showMessage(text, type = "") {
-
-            message.textContent = text;
-
-            message.className = "message";
-
-            if (type) {
-                message.classList.add(type);
-            }
-
-            message.classList.add("show");
-
-            setTimeout(() => {
-                message.classList.remove("show");
-            }, 3000);
-        }
-
-
-        /* =========================================
-           LOAD SAVED DATA
-        ========================================= */
-
-        window.addEventListener("DOMContentLoaded", () => {
-
-            const savedUsername =
-                localStorage.getItem("username");
-
-            const savedPlatform =
-                localStorage.getItem("selectedPlatform");
-
-            if (savedUsername) {
-                usernameInput.value =
-                    savedUsername;
-            }
-
-            if (savedPlatform) {
-
-                selectedPlatform =
-                    savedPlatform;
-
-                platforms.forEach(platform => {
-
-                    if (
-                        platform.dataset.platform ===
-                        savedPlatform
-                    ) {
-                        platform.classList.add("selected");
-                    }
-
-                });
-
-            }
-
-        });
-
-
-        /* =========================================
-           USERNAME INPUT
-        ========================================= */
-
-        usernameInput.addEventListener(
-            "input",
-            function () {
-
-                this.value =
-                    this.value.replace(
-                        /[^a-zA-Z0-9_\- ]/g,
-                        ""
-                    );
-
-            }
-        );
-
-
-        /* =========================================
-           ENTER KEY
-        ========================================= */
-
-        usernameInput.addEventListener(
-            "keydown",
-            function(event) {
-
-                if (event.key === "Enter") {
-                    continueBtn.click();
-                }
-
-            }
-        );
-
-
-        /* =========================================
-           CONTINUE BUTTON
-        ========================================= */
-
-        continueBtn.addEventListener(
-            "click",
-            function () {
-
-                const username =
-                    usernameInput.value.trim();
-
-
-                /* VALIDATE USERNAME */
-
-                if (username.length < 3) {
-
-                    showMessage(
-                        "Please enter a valid Username/ID.",
-                        "error"
-                    );
-
-                    usernameInput.focus();
-
-                    return;
-                }
-
-
-                /* VALIDATE PLATFORM */
-
-                if (!selectedPlatform) {
-
-                    showMessage(
-                        "Please select your platform.",
-                        "error"
-                    );
-
-                    return;
-                }
-
-
-                /* SAVE */
-
-                localStorage.setItem(
-                    "username",
-                    username
-                );
-
-                localStorage.setItem(
-                    "selectedPlatform",
-                    selectedPlatform
-                );
-
-
-                /* LOADING */
-
-                continueBtn.classList.add("loading");
-
-
-                setTimeout(() => {
-
-                    continueBtn.classList.remove(
-                        "loading"
-                    );
-
-                    showMessage(
-                        `Username: ${username} | Platform: ${selectedPlatform}`,
-                        "success"
-                    );
-
-                }, 1500);
-
-            }
-        );
-
-    </script>
+    <!-- SUCCESS MODAL -->
+    <div
+        class="modal"
+        id="modal"
+        aria-hidden="true"
+    >
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-box">
+
+            <button
+                class="modal-close"
+                id="modalClose"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div class="success-circle">
+                ✓
+            </div>
+
+            <h2>
+                Ready to Continue
+            </h2>
+
+            <p id="modalText">
+                Your selection has been saved locally.
+            </p>
+
+            <button
+                class="modal-button"
+                id="modalOk"
+                type="button"
+            >
+                OK
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
 
 </body>
 </html>
